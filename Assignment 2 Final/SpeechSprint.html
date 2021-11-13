@@ -1,0 +1,79 @@
+<!--Web Audio Speech Synthesis and Speech Recognition Implementation for p5.js (http://p5js.org)
+
+R. Luke DuBois (dubois@nyu.edu)
+ABILITY Project / Brooklyn Experimental Media Center
+NYU-->
+<html>
+<head>
+	<!--start of example code-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.5/p5.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.5/addons/p5.dom.js"></script>
+	<script src="../lib/p5.speech.js"></script>
+	<!--end of example code-->
+	<script>
+//code changed by me
+	var words = ["Hello", "wasgood", "Canada", "USA"]; // some words
+	//end of code changed by me
+	var iptr = 0; // a counter for the words
+//example code start
+	var myVoice = new p5.Speech(); // new P5.Speech object
+
+	var listbutton; // button
+
+	function setup()
+	{
+		// graphics stuff:
+		createCanvas(windowWidth, windowHeight);
+		background(193, 10, 10);
+		fill(255, 255, 255, 100);
+		// instructions:
+		textSize(72);
+		textAlign(CENTER);
+		text("CLICK", width/2, height/2);
+		text("Mine", width/2, height/3);
+		// button:
+		listbutton = createButton('List Voices');
+  		listbutton.position(500, 830);
+  		listbutton.mousePressed(doList);
+//end of example code
+  		// say hello:
+		  //example code changed start
+		myVoice.speak('Testing');
+//example code changed end
+	}
+
+	function draw()
+	{
+		//code added by me
+		noFill();
+		rect(mouseX,mouseY,50,50);// why draw when you can click?
+		//end of code added by me
+	}
+//example code
+	function doList()
+	{
+		myVoice.listVoices(); // debug printer for voice options
+	}
+
+	function keyPressed()
+	{
+		background(255, 0, 0); // clear screen
+	}
+
+	function mousePressed()
+	{
+		// if in bounds:
+		if(mouseX<width && mouseY<height) {
+			rect(mouseX, mouseY, 50, 50); // circle
+			// randomize voice and speak word:
+			myVoice.setVoice(Math.floor(random(myVoice.voices.length)));
+			myVoice.speak(words[iptr]);
+			iptr = (iptr+1) % words.length; // increment
+		}
+	}
+//end of example code
+</script>
+</head>
+<body>
+</body>
+</html>
